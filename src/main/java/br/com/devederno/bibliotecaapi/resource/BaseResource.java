@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,7 +23,7 @@ import br.com.devederno.bibliotecaapi.model.Entidade;
 import br.com.devederno.bibliotecaapi.service.BaseServiceInterface;
 
 public abstract class BaseResource<E extends Entidade,S extends BaseServiceInterface<E> > {
-
+	
 	@Autowired
 	private S service;
 	

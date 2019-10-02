@@ -117,4 +117,65 @@ public class Livro extends Entidade {
 		this.autor = autor;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((autor == null) ? 0 : autor.hashCode());
+		result = prime * result + ((dataPublicacao == null) ? 0 : dataPublicacao.hashCode());
+		result = prime * result + ((editora == null) ? 0 : editora.hashCode());
+		result = prime * result + ((genero == null) ? 0 : genero.hashCode());
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime * result + ((valor == null) ? 0 : valor.hashCode());
+		result = prime * result + ((volume == null) ? 0 : volume.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Livro other = (Livro) obj;
+		if (autor == null) {
+			if (other.autor != null)
+				return false;
+		} else if (!autor.equals(other.autor))
+			return false;
+		if (dataPublicacao == null) {
+			if (other.dataPublicacao != null)
+				return false;
+		} else if (!dataPublicacao.equals(other.dataPublicacao))
+			return false;
+		if (editora == null) {
+			if (other.editora != null)
+				return false;
+		} else if (!editora.equals(other.editora))
+			return false;
+		if (genero == null) {
+			if (other.genero != null)
+				return false;
+		} else if (!genero.equals(other.genero))
+			return false;
+		if (nome == null) {
+			if (other.nome != null)
+				return false;
+		} else if (!nome.equals(other.nome))
+			return false;
+		if (valor == null) {
+			if (other.valor != null)
+				return false;
+		} else if (!valor.equals(other.valor))
+			return false;
+		if (volume == null) {
+			if (other.volume != null)
+				return false;
+		} else if (!volume.equals(other.volume))
+			return false;
+		return true;
+	}
+
 }

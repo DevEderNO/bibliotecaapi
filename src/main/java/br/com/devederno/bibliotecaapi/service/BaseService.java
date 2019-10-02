@@ -41,4 +41,5 @@ public class BaseService<E extends Entidade,R extends JpaRepository<E, Long>> im
 	public List<E> listar(){
 		return repository.findAll();
 	}
+
 }

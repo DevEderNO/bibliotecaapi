@@ -87,4 +87,54 @@ public class Emprestimo extends Entidade {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((cliente == null) ? 0 : cliente.hashCode());
+		result = prime * result + ((dataDaDevolucao == null) ? 0 : dataDaDevolucao.hashCode());
+		result = prime * result + ((dataDoEmprestimo == null) ? 0 : dataDoEmprestimo.hashCode());
+		result = prime * result + ((livro == null) ? 0 : livro.hashCode());
+		result = prime * result + ((valorDoEmprestimo == null) ? 0 : valorDoEmprestimo.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Emprestimo other = (Emprestimo) obj;
+		if (cliente == null) {
+			if (other.cliente != null)
+				return false;
+		} else if (!cliente.equals(other.cliente))
+			return false;
+		if (dataDaDevolucao == null) {
+			if (other.dataDaDevolucao != null)
+				return false;
+		} else if (!dataDaDevolucao.equals(other.dataDaDevolucao))
+			return false;
+		if (dataDoEmprestimo == null) {
+			if (other.dataDoEmprestimo != null)
+				return false;
+		} else if (!dataDoEmprestimo.equals(other.dataDoEmprestimo))
+			return false;
+		if (livro == null) {
+			if (other.livro != null)
+				return false;
+		} else if (!livro.equals(other.livro))
+			return false;
+		if (valorDoEmprestimo == null) {
+			if (other.valorDoEmprestimo != null)
+				return false;
+		} else if (!valorDoEmprestimo.equals(other.valorDoEmprestimo))
+			return false;
+		return true;
+	}
+	
 }

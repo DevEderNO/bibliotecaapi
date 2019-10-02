@@ -21,53 +21,55 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class ApiException extends ResponseEntityExceptionHandler {
-	
-	@ExceptionHandler({EmptyResultDataAccessException.class})
-	public ResponseEntity<Object> handlerEmptyResultDataAccessException(EmptyResultDataAccessException ex,WebRequest request ){
-		
+
+	@ExceptionHandler({ EmptyResultDataAccessException.class })
+	public ResponseEntity<Object> handlerEmptyResultDataAccessException(
+			EmptyResultDataAccessException ex, WebRequest request) {
 		String mensagemUsuario = "Recurso não encontrado!";
 		String mensagemDesenvolvedor = ex.toString();
-		
-		List<ErroDetalhe> erros = Arrays.asList(new ErroDetalhe(mensagemUsuario, mensagemDesenvolvedor));
-		
-		return handleExceptionInternal(ex, erros, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+		List<ErroDetalhe> erros 
+			= Arrays.asList(
+					new ErroDetalhe(mensagemUsuario, mensagemDesenvolvedor));
+	
+		return handleExceptionInternal(
+				ex,erros, new HttpHeaders(), 
+				HttpStatus.NOT_FOUND, request);
 	}
 	
-	private List<ErroDetalhe> criarListaErros(BindingResult bindResult) {
-		
+	private List<ErroDetalhe> criarListaErros(BindingResult bindingResult) {
 		List<ErroDetalhe> erros = new ArrayList<>();
 		
-		/* 
-		for(FieldError fieldError : bindResult.getFieldErrors()) {
-			erros.add(new ErroDetalhe(fieldError.getDefaultMessage(), fieldError.toString()));
-		}
-		*/
-		
-		bindResult.getFieldErrors()
-		.forEach((fieldError)-> erros.add(new ErroDetalhe(fieldError.getDefaultMessage(), fieldError.toString())));
+		bindingResult.getFieldErrors()
+			.forEach((fieldErro) -> erros.add(
+						new ErroDetalhe(fieldErro.getDefaultMessage(),
+				fieldErro.toString())));
 		return erros;
 	}
-	
+
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(
-			MethodArgumentNotValidException ex,	HttpHeaders headers, HttpStatus status, WebRequest request) {
+			MethodArgumentNotValidException ex,
+			HttpHeaders headers, HttpStatus status, WebRequest request) {
+		
 		List<ErroDetalhe> erros = criarListaErros(ex.getBindingResult());
-		return handleExceptionInternal(ex, erros, headers, HttpStatus.BAD_REQUEST, request);
+
+		return handleExceptionInternal(ex, 
+				erros, headers, HttpStatus.BAD_REQUEST, request);
 	}
 	
 	@ExceptionHandler({ ConstraintViolationException.class })
 	public ResponseEntity<Object> handlerConstraintViolationException(ConstraintViolationException ex,
 			WebRequest request) {
-		String mensagemUsuario = "Recurso não encontrado";
+		String mensagemUsuario = "Falha ao realizar opereção, tente novamente mais tarde!";
 		String mensagemDesenvolvedor = ex.toString();
 		List<ErroDetalhe> erros = Arrays.asList(new ErroDetalhe(mensagemUsuario, mensagemDesenvolvedor));
 		return handleExceptionInternal(ex, erros, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
 	}
 	
-	public static class ErroDetalhe{
+	private static class ErroDetalhe {
 		private String mensagemUsuario;
 		private String mensagemDesenvolvedor;
-		
+
 		public ErroDetalhe(String mensagemUsuario, String mensagemDesenvolvedor) {
 			this.mensagemUsuario = mensagemUsuario;
 			this.mensagemDesenvolvedor = mensagemDesenvolvedor;
@@ -80,6 +82,5 @@ public class ApiException extends ResponseEntityExceptionHandler {
 		public String getMensagemDesenvolvedor() {
 			return mensagemDesenvolvedor;
 		}
-		
 	}
 }

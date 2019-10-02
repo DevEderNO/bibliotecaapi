@@ -1,16 +1,25 @@
 package br.com.devederno.bibliotecaapi.model;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
 
-@MappedSuperclass
-public class Entidade {
+@Entity
+public class Permissao {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	private String descricao;
+
+	public Permissao() {
+	}
+
+	public Permissao(Long id, String descricao) {
+		this.id = id;
+		this.descricao = descricao;
+	}
 
 	public Long getId() {
 		return id;
@@ -18,6 +27,14 @@ public class Entidade {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
 	@Override
@@ -36,7 +53,7 @@ public class Entidade {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Entidade other = (Entidade) obj;
+		Permissao other = (Permissao) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -44,5 +61,5 @@ public class Entidade {
 			return false;
 		return true;
 	}
-	
+
 }
